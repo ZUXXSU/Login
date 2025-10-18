@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:login/Screens%20/Chat.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -89,12 +90,16 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _showFeedback(String message, {bool isError = false}) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: isError ? Colors.redAccent : Colors.teal,
-      ),
-    );
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(
+    //     content: Text(message),
+    //     backgroundColor: isError ? Colors.redAccent : Colors.teal,
+    //   ),
+    // );
+    Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => const ChatScreen()),
+  );
   }
 
   @override
