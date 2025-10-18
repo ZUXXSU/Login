@@ -3,38 +3,25 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'firebase_options.dart';
 
-// IMPORTANT: Ensure you have your firebase_options.dart file
-// import 'firebase_options.dart';
-
-// --- Local Notifications Setup ---
-// Create an instance of the plugin
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
-// Define the Android notification channel
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'high_importance_channel', // id
   'High Importance Notifications', // title
   description: 'This channel is used for important notifications.', // description
   importance: Importance.max,
 );
-// --- End of Notifications Setup ---
 
-
-// TOP-LEVEL FUNCTION: Handles background messages
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // Initialize Firebase to use other services
   await Firebase.initializeApp();
   print("Handling a background message: ${message.messageId}");
 
-  // --- Display the notification ---
-  // Extract notification data
   final notification = message.notification;
   final android = message.notification?.android;
-
-  // If there's a notification and it's for Android, show it
   if (notification != null && android != null) {
     flutterLocalNotificationsPlugin.show(
       notification.hashCode,
@@ -55,21 +42,14 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 
 void main() async {
-  // Ensure widgets are initialized
   WidgetsFlutterBinding.ensureInitialized();
-  // Initialize Firebase
   await Firebase.initializeApp(
-      // options: DefaultFirebaseOptions.currentPlatform,
+      options: DefaultFirebaseOptions.currentPlatform,
       );
-
-  // --- Initialize Local Notifications Plugin ---
-  // Create the notification channel on the device
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
-
-  // Set the background messaging handler
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(const MyApp());

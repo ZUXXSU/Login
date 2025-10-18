@@ -22,11 +22,9 @@ class _LoginPageState extends State<LoginPage> {
     _initializeFirebaseMessaging();
   }
 
-  // Method to set up Firebase Messaging
   void _initializeFirebaseMessaging() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-    // 1. Request Permission
     NotificationSettings settings = await messaging.requestPermission(
       alert: true,
       announcement: false,
@@ -43,22 +41,16 @@ class _LoginPageState extends State<LoginPage> {
       print('User declined or has not accepted permission');
     }
 
-    // 2. Get the FCM Token
-    // This token is the unique identifier for this device
     final fcmToken = await messaging.getToken();
     print('=======================================');
     print('FCM Token: $fcmToken');
     print('=======================================');
-    // You would typically send this token to your backend server to store it.
-
-    // 3. Listen for foreground messages
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print('Got a message whilst in the foreground!');
       print('Message data: ${message.data}');
 
       if (message.notification != null) {
         print('Message also contained a notification: ${message.notification}');
-        // Show an in-app notification/dialog
         _showFeedback(
           '${message.notification!.title}\n${message.notification!.body}',
           isError: false,
