@@ -1,22 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:login/Model/User.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'dart:convert';
 
-// The User model you provided, renamed to ChatMessage for clarity
-class ChatMessage {
-  String? user;
-  String? message;
-  String? timestamp;
-
-  ChatMessage({this.user, this.message, this.timestamp});
-
-  ChatMessage.fromJson(Map<String, dynamic> json) {
-    user = json['user'];
-    message = json['message'];
-    timestamp = json['timestamp'];
-  }
-}
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -27,7 +14,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   bool _isBroadcasting = false;
-  final List<ChatMessage> _messages = [];
+  final List<User> _messages = [];
   late final WebSocketChannel _channel;
 
   final String _toggleUrl = 'http://localhost:8080/toggle';
@@ -52,9 +39,9 @@ class _ChatScreenState extends State<ChatScreen> {
       _channel.stream.listen(
         (data) {
           if (data != null) {
-            // Decode the JSON string and create a ChatMessage object
+            // Decode the JSON string and create a User object
             final messageData = jsonDecode(data);
-            final message = ChatMessage.fromJson(messageData);
+            final message = User.fromJson(messageData);
             
             // Add the new message to the list and update the UI
             setState(() {

@@ -32,7 +32,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
           channel.id,
           channel.name,
           channelDescription: channel.description,
-          // IMPORTANT: use the same name as your drawable icon
           icon: 'app_icon',
         ),
       ),
