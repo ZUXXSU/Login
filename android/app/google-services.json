@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "738508310831",
+    "project_id": "emailnnotification",
+    "storage_bucket": "emailnnotification.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738508310831:android:20ae635eb3da30a9b579da",
+        "android_client_info": {
+          "package_name": "com.example.login"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm7gO6bZRT27e_731pqQzm0ztmHT4rReI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
